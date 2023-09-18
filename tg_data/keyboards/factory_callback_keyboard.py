@@ -21,6 +21,18 @@ def factory_keyboard(buttons: dict):#prefix: str,
     builder.adjust(*buttons['items'])
     return builder.as_markup()
 
+def build_keyboard(buttons: dict):
+    builder = InlineKeyboardBuilder()
+    for k, v, in buttons.items():
+        if not k == "items":
+            builder.button(
+                text=k,
+                callback_data=v
+            )
+        builder.adjust(*buttons['items'])
+    return builder.as_markup()
+
+
 
 def assembly_keyboard(buttons: dict):
     builder = InlineKeyboardBuilder()
