@@ -4,7 +4,7 @@ from typing import Optional
 from aiogram.filters.callback_data import CallbackData
 
 
-class NumbersCallbackFactory(CallbackData, prefix="city"):
+class NumbersCallbackFactory(CallbackData, prefix=""):
     action: str
     value: Optional[int] = None
 

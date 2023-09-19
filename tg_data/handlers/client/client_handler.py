@@ -37,11 +37,12 @@ async def select_city(call: types.CallbackQuery, state: FSMContext):
     await call.message.edit_text("➖" * 15 +
                                  "\n\nВыбери город из списка ⬇\n\n"
                                  + "➖" * 15, reply_markup=build_keyboard(buttons=kb.city))
+    await call.answer()
 
 
 @router.callback_query(F.data.startswith("city"))
 async def select_region(call: types.CallbackQuery, state: FSMContext):
-    print(call.data)
+    await state.update_data(region_id=call.data.split('_')[1])
 
 
 
