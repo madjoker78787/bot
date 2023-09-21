@@ -5,8 +5,8 @@ from aiogram.fsm.context import FSMContext
 
 from tg_data.data import define
 from tg_data.handlers.client import client_kb as kb
-from tg_data.keyboards.factory_callback_keyboard import factory_keyboard, \
-    NumbersCallbackFactory, assembly_keyboard, build_keyboard
+from tg_data.keyboards.build_keyboard import factory_keyboard, \
+    NumbersCallbackFactory, assembly_keyboard, inline_keyboard
 
 router = Router()
 
@@ -19,30 +19,31 @@ async def start(msg: Message, state: FSMContext):
     # except:
     #     pass
     await msg.answer(f"{define.welcome_text}",
-                     reply_markup=assembly_keyboard(kb.menu))
+                     reply_markup=inline_keyboard(kb.menu))
 
 
 @router.callback_query(F.data.startswith("menu"))
 async def call_menu(call: types.CallbackQuery, state: FSMContext):
     await state.clear()
-    await call.message.edit_text("♻ Подождите, запрос обрабатывается...")
+    # await call.message.edit_text("♻ Подождите, запрос обрабатывается...")
 
-    await call.message.edit_text(f"{define.text}",reply_markup=build_keyboard(kb.menu))
+    await call.message.edit_text(f"{define.text}", reply_markup=inline_keyboard(kb.menu))
 
 
 @router.callback_query(F.data.startswith("shopping"))
 async def select_city(call: types.CallbackQuery, state: FSMContext):
-    await call.message.edit_text("♻ Подождите, запрос обрабатывается...")
+    # await call.message.edit_text("♻ Подождите, запрос обрабатывается...")
 
     await call.message.edit_text("➖" * 15 +
                                  "\n\nВыбери город из списка ⬇\n\n"
-                                 + "➖" * 15, reply_markup=build_keyboard(buttons=kb.city))
+                                 + "➖" * 15, reply_markup=inline_keyboard(buttons=kb.city))
     await call.answer()
 
 
 @router.callback_query(F.data.startswith("city"))
 async def select_region(call: types.CallbackQuery, state: FSMContext):
-    await state.update_data(region_id=call.data.split('_')[1])
+    print(call.data)
+    await state.update_data(region_id=call.data.split(':')[1])
 
 
 

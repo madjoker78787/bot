@@ -1,12 +1,13 @@
 from aiogram import types
-from aiogram.utils.keyboard import InlineKeyboardBuilder
+from aiogram.utils.keyboard import InlineKeyboardBuilder, KeyboardBuilder
 from typing import Optional
 from aiogram.filters.callback_data import CallbackData
 
 
-class NumbersCallbackFactory(CallbackData, prefix=""):
+class NumbersCallbackFactory(CallbackData):
     action: str
     value: Optional[int] = None
+    # prefix = CallbackData.__prefix__
 
 
 
@@ -21,7 +22,7 @@ def factory_keyboard(buttons: dict):#prefix: str,
     builder.adjust(*buttons['items'])
     return builder.as_markup()
 
-def build_keyboard(buttons: dict):
+def inline_keyboard(buttons: dict):
     builder = InlineKeyboardBuilder()
     for k, v, in buttons.items():
         if not k == "items":
@@ -32,12 +33,3 @@ def build_keyboard(buttons: dict):
         builder.adjust(*buttons['items'])
     return builder.as_markup()
 
-
-
-def assembly_keyboard(buttons: dict):
-    builder = InlineKeyboardBuilder()
-    for k, v, in buttons.items():
-        if not k == "items":
-            builder.add(types.InlineKeyboardButton(text=k, callback_data=v))
-    builder.adjust(*buttons['items'])
-    return builder.as_markup()
