@@ -3,4 +3,4 @@ venv
 .idea
 
 test/test.py
-*__pycashe__/git
+*__pycashe__/
