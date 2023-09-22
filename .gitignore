@@ -1,5 +1,5 @@
 tg_data/data/config.py
 venv
 .idea
-test
-*__pycashe__/
+test/test.py
+*__pycashe__/git
